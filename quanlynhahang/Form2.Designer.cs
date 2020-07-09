@@ -130,7 +130,7 @@
             // columnHeader1
             // 
             this.columnHeader1.Text = "Tên món";
-            this.columnHeader1.Width = 74;
+            this.columnHeader1.Width = 218;
             // 
             // columnHeader2
             // 
@@ -194,6 +194,7 @@
             this.button4.TabIndex = 7;
             this.button4.Text = "Thanh toán";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // numericUpDown2
             // 

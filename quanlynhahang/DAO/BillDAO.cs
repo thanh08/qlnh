@@ -32,13 +32,18 @@ namespace quanlynhahang.DAO
 
         public int laybillbangid(int id)
         {
-            DataTable data = dataprovider.Instance.ExecuteQuery("select * from dbo.bill where idtable= "+id+" and status = 0;");
+            DataTable data = dataprovider.Instance.ExecuteQuery("select * from dbo.bill where idtable= "+id+" and status = 0");
             if(data.Rows.Count >0)
             {
                 Bill bill = new Bill(data.Rows[0]);
                 return bill.Id;
             }
             return -1;
+        }
+        public void CheckOut(int id)
+        {
+            string query = "update dbo.bill set status = 1 where id = " + id;
+            dataprovider.Instance.ExecuteNonQuery(query);
         }
         public void InsertBill(int id)
         {

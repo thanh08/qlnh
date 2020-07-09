@@ -20,7 +20,7 @@ namespace quanlynhahang.DTO
         public Menu(DataRow row)
         {
             this.Foodname = row["ten"].ToString();
-            this.Count =(int) row["count"];
+            this.Count =(int) row["soluong"];
             this.Prive = (float)Convert.ToDouble(row["price"].ToString());
             this.Totalprive = (float)Convert.ToDouble(row["tonggia"].ToString());
         }

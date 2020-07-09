@@ -21,7 +21,7 @@ namespace quanlynhahang.DTO
             this.Id = (int)row["id"];
             this.Idbill = (int)row["idbill"];
             this.Idmonan = (int)row["idmonan"];
-            this.count = (int)row["count"];
+            this.count = (int)row["soluong"];
 
         }
         private int count;

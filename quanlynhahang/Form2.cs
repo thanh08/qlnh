@@ -37,6 +37,7 @@ namespace quanlynhahang
         }
         void hienthiban()
         {
+            flowLayoutPanel1.Controls.Clear();
             List<Ban> tableList = banDOA.Instance.Hienthids();
 
             foreach(Ban item in tableList)
@@ -72,7 +73,8 @@ namespace quanlynhahang
                 listView1.Items.Add(lsvitem);
             }
             CultureInfo culter = new CultureInfo("vi-VN");
-            textBox1.Text = tong.ToString("c", culter); 
+            textBox1.Text = tong.ToString("c", culter);
+            
 
         }
 
@@ -125,21 +127,39 @@ namespace quanlynhahang
             Ban table = listView1.Tag as Ban;
             int idbill = BillDAO.Instance.laybillbangid(table.Id);
             int foodid = (comboBox2.SelectedItem as Monan).Id;
-            int count = (int)numericUpDown1.Value;
+            int soluong = (int)numericUpDown1.Value;
 
 
             if(idbill == -1)
             {
                 BillDAO.Instance.InsertBill(table.Id);
-            BillinfoDAO.Instance.InsertBillInfo(BillDAO.Instance.Laybill(), foodid, count);
+            BillinfoDAO.Instance.InsertBillInfo(BillDAO.Instance.Laybill(), foodid, soluong);
         }
             else
             {
-                BillinfoDAO.Instance.InsertBillInfo(idbill, foodid, count);
+                BillinfoDAO.Instance.InsertBillInfo(idbill, foodid, soluong);
             }
             ShowBill(table.Id);
-    }
+            hienthiban();
+        }
 
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Ban table = listView1.Tag as Ban;
+            int idBill = BillDAO.Instance.laybillbangid(table.Id);
+            if(idBill != -1)
+            {
+                if(MessageBox.Show("Bạn có chắc thanh toán hóa đơn cho " + table.Ten, "Thông báo" ,MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
+                {
+                    BillDAO.Instance.CheckOut(idBill);
+                    ShowBill(table.Id);
+
+                    hienthiban();
+
+                }
+
+            }
+        }
     }
 
        

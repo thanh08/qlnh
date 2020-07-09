@@ -41,9 +41,9 @@ namespace quanlynhahang.DAO
             }
             return listBillinfo;
         }
-        public void InsertBillInfo(int idbill, int idmonan, int count)
+        public void InsertBillInfo(int idbill, int idmonan, int soluong)
         {
-            dataprovider.Instance.ExecuteNonQuery("usp_thongtinbill @idbill , @idmonan , @count", new object[] {idbill,idmonan,count});
+            dataprovider.Instance.ExecuteNonQuery("themthongtinbill @idbill , @idmonan , @soluong", new object[] { idbill, idmonan, soluong });
         }
     }
 }
