@@ -1,4 +1,5 @@
-﻿using quanlynhahang.DTO;
+﻿using quanlynhahang.DAO;
+using quanlynhahang.DTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +19,18 @@ namespace quanlynhahang
         {
             InitializeComponent();
             loadtaikhoanlist();
+            LoadDateTimePickerBill();
+            LoadListBillByDate(dateTimePicker1.Value, dateTimePicker2.Value);
+        }
+        void LoadDateTimePickerBill()
+        {
+            DateTime today = DateTime.Now;
+            dateTimePicker1.Value = new DateTime(today.Year, today.Month, 1);
+            dateTimePicker2.Value = dateTimePicker1.Value.AddMonths(1).AddDays(-1);
+        }
+        void LoadListBillByDate(DateTime checkIn, DateTime checkOut)
+        {
+            dataGridView1.DataSource = BillDAO.Instance.GetBillListByDate(checkIn, checkOut);
         }
         void loadtaikhoanlist ()
         {
@@ -36,6 +49,11 @@ namespace quanlynhahang
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            LoadListBillByDate(dateTimePicker1.Value, dateTimePicker2.Value);
         }
     }
 }

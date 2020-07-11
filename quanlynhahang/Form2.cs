@@ -147,11 +147,16 @@ namespace quanlynhahang
         {
             Ban table = listView1.Tag as Ban;
             int idBill = BillDAO.Instance.laybillbangid(table.Id);
-            if(idBill != -1)
+            int discount = (int)numericUpDown2.Value;
+
+            double totalPrice = Convert.ToDouble(textBox1.Text.Split('.')[0]);
+            double finalTotalPrice = totalPrice - (totalPrice / 100) * discount;
+
+            if (idBill != -1)
             {
-                if(MessageBox.Show("Bạn có chắc thanh toán hóa đơn cho " + table.Ten, "Thông báo" ,MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
+                if (MessageBox.Show(string.Format("Bạn có chắc thanh toán hóa đơn cho {0}\nTổng tiền - (Tổng tiền / 100) x Giảm giá\n=> {1} - ({1} / 100) x {2} = {3}", table.Ten, totalPrice, discount, finalTotalPrice), "Thông báo", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
                 {
-                    BillDAO.Instance.CheckOut(idBill);
+                    BillDAO.Instance.CheckOut(idBill,discount, (float)finalTotalPrice);
                     ShowBill(table.Id);
 
                     hienthiban();
