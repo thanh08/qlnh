@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using quanlynhahang.DTO;
 
 namespace quanlynhahang
 {
@@ -43,7 +44,8 @@ namespace quanlynhahang
             string password = textBox2.Text;
             if (dangnhap(username, password))
             {
-                Form2 f = new Form2();
+                Account loginAccount = taikhoanDAO.Instance.GetAccountByUserName(username);
+                Form2 f = new Form2(loginAccount);
                 this.Hide();
                 f.ShowDialog();
                 this.Show();

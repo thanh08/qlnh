@@ -16,12 +16,28 @@ namespace quanlynhahang
 {
     public partial class Form2 : Form
     {
-        public Form2()
+        private Account loginAccount;
+        public Account LoginAccount
+        {
+            get { return loginAccount; }
+            set { loginAccount = value; ChangeAccount(loginAccount.Type); }
+        }
+
+        void ChangeAccount(int type)
+        {
+            adminToolStripMenuItem.Enabled = type == 1;
+            thôngTinCáNhânToolStripMenuItem.Text += " (" + LoginAccount.DisplayName + ")";
+        }
+
+        public Form2(Account acc)
         {
             InitializeComponent();
+            this.LoginAccount = acc;
+            
             hienthiban();
             hienthidanhmuc();
         }
+        
         void hienthidanhmuc()
         {
             List<Danhmuc> listdanhmuc = danhmucDAO.Instance.Laydanhmuc();
@@ -94,7 +110,7 @@ namespace quanlynhahang
 
         private void thToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form3 f = new Form3();
+            Form3 f = new Form3(LoginAccount);
             f.ShowDialog();
 
         }
@@ -110,7 +126,7 @@ namespace quanlynhahang
             f.ShowDialog();
         }
         #endregion
-
+        
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             int id = 0;
@@ -128,7 +144,6 @@ namespace quanlynhahang
             int idbill = BillDAO.Instance.laybillbangid(table.Id);
             int foodid = (comboBox2.SelectedItem as Monan).Id;
             int soluong = (int)numericUpDown1.Value;
-
 
             if(idbill == -1)
             {
@@ -149,12 +164,12 @@ namespace quanlynhahang
             int idBill = BillDAO.Instance.laybillbangid(table.Id);
             int discount = (int)numericUpDown2.Value;
 
-            double totalPrice = Convert.ToDouble(textBox1.Text.Split('.')[0]);
-            double finalTotalPrice = totalPrice - (totalPrice / 100) * discount;
+            double totalPrice = Convert.ToDouble(textBox1.Text.Split(',')[0]);
+            double finalTotalPrice = totalPrice - (totalPrice/100) * discount;
 
             if (idBill != -1)
             {
-                if (MessageBox.Show(string.Format("Bạn có chắc thanh toán hóa đơn cho {0}\nTổng tiền - (Tổng tiền / 100) x Giảm giá\n=> {1} - ({1} / 100) x {2} = {3}", table.Ten, totalPrice, discount, finalTotalPrice), "Thông báo", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
+                if (MessageBox.Show(string.Format("Bạn có chắc thanh toán hóa đơn cho {0}\nTổng tiền phải thanh toán sau giảm giá:{1}", table.Ten, finalTotalPrice), "Thông báo", MessageBoxButtons.OKCancel) == System.Windows.Forms.DialogResult.OK)
                 {
                     BillDAO.Instance.CheckOut(idBill,discount, (float)finalTotalPrice);
                     ShowBill(table.Id);
@@ -164,6 +179,21 @@ namespace quanlynhahang
                 }
 
             }
+        }
+
+        private void thôngTinCáNhânToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

@@ -54,6 +54,7 @@
     <Compile Include="DAO\MenuDAO.cs" />
     <Compile Include="DAO\monanDAO.cs" />
     <Compile Include="DAO\taikhoanDAO.cs" />
+    <Compile Include="DTO\Account.cs" />
     <Compile Include="DTO\Ban.cs" />
     <Compile Include="DTO\Bill.cs" />
     <Compile Include="DTO\Billinfo.cs" />
